@@ -3,7 +3,6 @@ package com.example.moviepract
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,11 +16,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.moviepract.data.MovieItem
+import com.example.moviepract.data.meals.Category
 import com.example.moviepract.presentation.MoviesViewModel
 import com.example.moviepract.ui.theme.MoviePractTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,6 +49,7 @@ fun MovieScreen(
     Box(modifier = Modifier.fillMaxSize()){
         LazyColumn(modifier = Modifier.fillMaxSize()){
             items(moviesData.isSuccess){movie ->
+
                 MoviesListUI(movie = movie)
             }
         }
@@ -60,14 +58,14 @@ fun MovieScreen(
 }
 
 @Composable
-fun MoviesListUI(movie: MovieItem){
+fun MoviesListUI(movie: Category){
 
         Card(modifier = Modifier
             .fillMaxWidth()
             .shadow(elevation = 4.dp)
         ) {
             Row(modifier = Modifier.fillMaxWidth()){
-                Text(text = movie.name)
+                Text(text = movie.strCategory)
             }
         }
 

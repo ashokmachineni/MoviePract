@@ -15,15 +15,24 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Provides
-    @Singleton
-    fun provideMoviesApi():MoviesApi{
-        return Retrofit.Builder()
-            .baseUrl("https://howtodoandroid.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(MoviesApi::class.java)
-    }
+//    @Provides
+//    @Singleton
+//    fun provideMoviesApi():MoviesApi{
+//        return Retrofit.Builder()
+//            .baseUrl("https://howtodoandroid.com/")
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//            .create(MoviesApi::class.java)
+//    }
+@Provides
+@Singleton
+fun provideMoviesApi():MoviesApi{
+    return Retrofit.Builder()
+        .baseUrl("https://www.themealdb.com/api/json/v1/1/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(MoviesApi::class.java)
+}
 
     @Provides
     @Singleton
