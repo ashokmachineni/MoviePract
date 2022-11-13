@@ -3,15 +3,25 @@ package com.example.moviepract
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.moviepract.data.MovieItem
+import com.example.moviepract.presentation.MoviesViewModel
 import com.example.moviepract.ui.theme.MoviePractTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                   MovieScreen()
                 }
             }
         }
@@ -30,14 +40,23 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun MovieScreen(
+    moviesViewModel: MoviesViewModel = hiltViewModel()
+){
+    val moviesData = moviesViewModel.moviesList.value
+    Box(modifier = Modifier.fillMaxSize()){
+        LazyColumn(modifier = Modifier.fillMaxSize()){
+            items(moviesData.isSuccess){movie ->
+                MoviesListUI(movie = movie)
+            }
+        }
+    }
+
 }
 
-@Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
-    MoviePractTheme {
-        Greeting("Android")
+fun MoviesListUI(movie: MovieItem){
+    Row(modifier = Modifier.fillMaxWidth()){
+        Text(text = movie.name)
     }
 }
